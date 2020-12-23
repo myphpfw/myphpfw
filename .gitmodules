@@ -1,0 +1,6 @@
+[submodule "modules/url_parser"]
+	path = modules/url_parser
+	url = git@git.bjphoster.com:myphpfw/url_parser.git
+[submodule "modules/database"]
+	path = modules/database
+	url = git@git.bjphoster.com:myphpfw/database.git
