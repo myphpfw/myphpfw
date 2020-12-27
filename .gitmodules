@@ -4,3 +4,6 @@
 [submodule "modules/database"]
 	path = modules/database
 	url = git@git.bjphoster.com:myphpfw/database.git
+[submodule "modules/config"]
+	path = modules/config
+	url = git@git.bjphoster.com:myphpfw/config.git
