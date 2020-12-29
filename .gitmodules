@@ -7,3 +7,6 @@
 [submodule "modules/config"]
 	path = modules/config
 	url = git@git.bjphoster.com:myphpfw/config.git
+[submodule "modules/twig_templating"]
+	path = modules/twig_templating
+	url = git@git.bjphoster.com:myphpfw/twig_templating.git
