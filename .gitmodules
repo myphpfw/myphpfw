@@ -1,15 +1,15 @@
 [submodule "modules/url_parser"]
 	path = modules/url_parser
-	url = git@git.bjphoster.com:myphpfw/url_parser.git
+	url = git@github.com:myphpfw/url_parser.git
 [submodule "modules/database"]
 	path = modules/database
-	url = git@git.bjphoster.com:myphpfw/database.git
+	url = git@github.com:myphpfw/database.git
 [submodule "modules/config"]
 	path = modules/config
-	url = git@git.bjphoster.com:myphpfw/config.git
+	url = git@github.com:myphpfw/config.git
 [submodule "modules/get_include_contents"]
 	path = modules/get_include_contents
-	url = git@git.bjphoster.com:myphpfw/get_include_contents.git
+	url = git@github.com:myphpfw/get_include_contents.git
 [submodule "modules/composer_modules"]
 	path = modules/composer_modules
-	url = git@git.bjphoster.com:myphpfw/composer_modules.git
+	url = git@github.com:myphpfw/composer_modules.git
