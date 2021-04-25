@@ -63,6 +63,13 @@ ENDHELP;
     function set_cache(array $modules): void {
         file_put_contents(".cache", json_encode($modules));
     }
+    function load_cache(): array|bool {
+        if(!is_file(".cache")) {
+            return FALSE;
+        }
+        $modules = json_decode(file_get_contents(".cache"), TRUE);
+        return $modules;
+    }
 
     if(sizeof($argv) < 2 || !required_argument($argv[1])) _help($argv[0], "No <command> provided!\n\n"); // check for user input presence
     switch($argv[1]) { // act according to said input
