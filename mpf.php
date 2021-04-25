@@ -60,8 +60,8 @@ ENDHELP;
             !array_key_exists("name", $global_config["db"])
         ) _help($argv[0], "Database configuration not present in the provided file!\n\n"); // check for presence of all required database connection parameters
     }
-    function _cache(array $cached_modules): void {
-        if(is_dir(".cache")) {}
+    function set_cache(array $modules): void {
+        file_put_contents(".cache", json_encode($modules));
     }
 
     if(sizeof($argv) < 2 || !required_argument($argv[1])) _help($argv[0], "No <command> provided!\n\n"); // check for user input presence
