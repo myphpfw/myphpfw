@@ -70,6 +70,26 @@ ENDHELP;
         $modules = json_decode(file_get_contents(".cache"), TRUE);
         return $modules;
     }
+    function list_modules($argv): array {
+        $modules = [];
+        $curl = curl_init();
+        curl_setopt($curl, CURLOPT_USERAGENT, "MyPHPFramework `mpf` CLI tool client"); // set the user agent (required on GitHub)
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1); // return an incapsulated string result
+        curl_setopt($curl, CURLOPT_URL, "https://api.github.com/orgs/myphpfw/repos"); // get all the org repo from GH's APIs
+        $api_repos = json_decode(curl_exec($curl), TRUE);
+        if(key_exists("message", $api_repos) && str_contains($api_repos["message"], "API rate limit exceeded") === TRUE) // check if we're surpassing GitHub's API rate limiting
+            _help($argv[0], "GitHub API rate limit exceeded, please try again later.\n", TRUE);
+        foreach($api_repos as $repo) { // loop through the repositories
+            if($repo["id"] === 326477370) continue; // exclude the parent (myphpfw) core repository
+            curl_setopt($curl, CURLOPT_URL, "https://api.github.com/repos/myphpfw/".$repo["name"]."/git/refs/tags"); // grab the tags from the APIs
+            $api_repo_tags = json_decode(curl_exec($curl), TRUE);
+            foreach($api_repo_tags as $key => $tag) { // lopp through the tags (versions) of each module
+                if(strcmp(gettype($key), "integer") === 0) $modules[$repo["name"]] = basename($tag["ref"], "/"); // from "refs/tags/x.x.x" print only "x.x.x"
+            }
+        }
+        curl_close($curl); // close the curl handler
+        return $modules;
+    }
 
     if(sizeof($argv) < 2 || !required_argument($argv[1])) _help($argv[0], "No <command> provided!\n\n"); // check for user input presence
     switch($argv[1]) { // act according to said input
@@ -86,6 +106,8 @@ ENDHELP;
             switch($argv[2]) {
                 case "list":
                     $cache = []; // initialize cache
+                    $modules = list_modules($argv);
+                    /* TODO: use $modules defined above
                     $curl = curl_init();
                     curl_setopt($curl, CURLOPT_USERAGENT, "MyPHPFramework `mpf` CLI tool client"); // set the user agent (required on GitHub)
                     curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1); // return an incapsulated string result
@@ -101,8 +123,17 @@ ENDHELP;
                         }
                     }
                     curl_close($curl); // close the curl handler
+                    */
                     break;
                 case "add":
+                    /* TODO: add module and save it in the cache
+                    set_cache([
+                        "test1" => ["0.1", "1.0", "1.1"],
+                        "test2" => ["1.0", "2.1"],
+                    ]);
+                    var_dump(list_modules($argv));
+                    */
+                    list_modules($argv);
                     if(sizeof($argv) < 4 || !required_argument($argv[3])) _help($argv[0], "Module to add not provided!\n\n"); // check module presence
                     break;
                 case "update":
